@@ -50,7 +50,7 @@ var mta = {
         console.log( "Travel with line " + onLine + ", through " + arr1.join(', ') );
         console.log( "Change at " + interChangeStops );
         console.log( "Continue with line " + offLine + ", through " + arr2.join(', ') );
-        console.log( (arr1.length + arr2.length) + " stops in total");
+console.log( (arr1.length + arr2.length) + " stops in total");
 
 
       } else {

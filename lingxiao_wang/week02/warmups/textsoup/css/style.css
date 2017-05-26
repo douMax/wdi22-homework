@@ -1,0 +1,17 @@
+body{
+  background-color: black;
+}
+
+
+#text{
+  display: none;
+}
+
+.word{
+  font-size: 60pt;
+  color: orange;
+  position: absolute;
+  /*top: 0;
+  left: 0;*/
+
+}
