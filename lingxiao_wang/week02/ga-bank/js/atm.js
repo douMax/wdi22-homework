@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 
   var $sAmount = $('#savings-amount').val();
-  $('#savings-amount').on('change keyup paste click', function(){
+  $('#savings-amount').on('change', function(){
     if($sAmount !== $(this).val() ){
       $sAmount = $(this).val();
       return $sAmount;
