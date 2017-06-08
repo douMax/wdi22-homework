@@ -1,0 +1,31 @@
+body{
+  background-color: white;
+  color: black;
+  font-family: "Helvetica", serif;
+}
+
+
+.results{
+  /*width: 800px;*/
+  margin: 20px auto;
+}
+
+img{
+  width:200px;
+}
+
+.info{
+  /*float:right;*/
+  vertical-align: top;
+  display: inline-block;
+  width:580px;
+  padding-left: 20px;
+}
+
+span{
+  float:right;
+}
+
+.poster{
+  display: inline-block;
+}

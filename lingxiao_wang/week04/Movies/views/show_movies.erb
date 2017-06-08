@@ -1,0 +1,29 @@
+
+<!-- <h2 class="title"><%= @title %></h2>
+
+<a href="<%= @movie_url %>"><img src="<%= @poster_url %>"></a> -->
+
+
+<% (0...9).each do |i| %>
+
+  <div class="results">
+
+    <div class="poster">
+      <a href="https://www.themoviedb.org/movie/<%=@movies[i]['id']%>">
+        <img src="http://image.tmdb.org/t/p/w300<%=@movies[i]["poster_path"]%>">
+        <!-- <% binding.pry %> -->
+
+      </a>
+    </div>
+    <div class="info">
+      <h3><%=@movies[i]['title']%> <span>Votes: <%=@movies[i]['vote_average']%></span></h3>
+      <p>Release Date: <%=@movies[i]['release_date']%></p>
+      <p>Original Language: <%=@movies[i]['original_language'].upcase%></p>
+      <p><%=@movies[i]['overview']%></p>
+    </div>
+
+  </div>
+
+
+
+<% end %>

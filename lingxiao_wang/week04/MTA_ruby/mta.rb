@@ -43,6 +43,7 @@ end
 # binding.pry
 
 puts "****** Welcome to MTA trip planner ******"
+puts "#{$mta}"
 puts "Please enter your starting line:"
 on_line = gets.chomp.downcase
 puts "Please enter your starting stop:"
@@ -53,11 +54,12 @@ puts "Please enter your ending stop:"
 off_stop = gets.chomp
 
 
+
 plan_trip on_line, on_stop, off_line, off_stop
 
 
 # test:
-plan_trip "n","Times Square", "l","Grand Central"
+# plan_trip "n","Times Square", "l","Grand Central"
 # from Line N, Times Square, to Line L, Grand Central
 # from Line 6, 1st, to Line L, Astor Place
 # from Line L, 33rd, to Line 6,
