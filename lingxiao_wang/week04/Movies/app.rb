@@ -26,5 +26,5 @@ get "/show_movies" do
   # binding.pry
   erb :show_movies
 
-  
+
 end
