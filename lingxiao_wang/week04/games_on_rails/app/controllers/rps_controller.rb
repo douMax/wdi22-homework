@@ -1,5 +1,10 @@
 class RpsController < ApplicationController
 
+  def throw
+    
+
+  end
+
   def play
 
       player_throw = params["throw"]

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get '/games/secret/:guess' => 'secret#play'
 
+  get '/games/rps' => 'rps#throw'
   get '/games/rps/:throw' => 'rps#play'
 
 

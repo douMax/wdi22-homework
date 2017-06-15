@@ -1,0 +1,24 @@
+<%= form_for @movie do |f| %>
+
+
+<!-- need a choice section to choose directors -->
+
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label :release_date %>
+  <%= f.text_field :release_date %>
+  <br>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+  <br>
+  <%= f.label :image %>
+  <%= f.text_field :image %>
+  <br>
+  <%= f.label :tmdb_id %>
+  <%= f.text_field :tmdb_id %>
+  <br>
+
+  <%= f.submit %>
+
+<% end %>

@@ -1,0 +1,35 @@
+
+
+<h2>Create new director</h2>
+
+<%= form_for @director do |f| %>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :nationality %>
+    <%= f.text_field :nationality, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :dob %>
+    <%= f.text_field :dob, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :bio %>
+    <%= f.text_field :bio, required: false %>
+  </p>
+
+  <p>
+    <%= f.label :image %>
+    <%= f.text_field :image, required: true %>
+  </p>
+
+  <%= f.submit %>
+
+
+<% end %>

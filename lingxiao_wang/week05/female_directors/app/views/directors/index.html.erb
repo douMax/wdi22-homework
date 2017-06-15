@@ -1,0 +1,15 @@
+<h1>Directors index</h1>
+
+<% @directors.each do |director| %>
+
+  <ul>
+    <li>
+      <a href="/directors/<%= director.id %>"><%= director.name %></a>
+    </li>
+  </ul>
+
+<% end %>
+
+<hr>
+
+<a class="button" href="/directors/new">New</a>

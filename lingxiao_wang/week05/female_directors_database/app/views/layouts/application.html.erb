@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FemaleDirectors</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <h1>Female Directors Database</h1>
+
+    <nav>
+      <ul>
+        <li><%= link_to "Directors", directors_path %></li>
+        <li><%= link_to "Movies", movies_path %></li>
+      </ul>
+    </nav>
+
+
+    <%= yield %>
+  </body>
+</html>

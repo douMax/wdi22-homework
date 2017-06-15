@@ -1,0 +1,23 @@
+<h2>Director Details</h2>
+
+<h3><%= @director.name %></h3>
+
+<img class="director_img" src="<%= @director.image %>" alt="">
+
+<p>Nationality: <%= @director.nationality %></p>
+<p>DOB: <%= @director.dob %></p>
+<p>Bio: <%= @director.bio %></p>
+
+<p>Movies:</p>
+
+<ul>
+  <% @director.movies.each do |movie| %>
+    <li>
+      <%= link_to movie.title, movie_path(movie) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "delete", director_path(@director.id), data: {:confirm => "Are you sure?" }, :method => :delete %>
+<br>
+<%= link_to "back", directors_path %>
