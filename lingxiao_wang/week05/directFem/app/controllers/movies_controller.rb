@@ -2,6 +2,7 @@ class MoviesController < ApplicationController
   def new
     @movie = Movie.new
     @directors = Director.all
+    @genres = Genre.all
   end
 
   def create
@@ -24,6 +25,8 @@ class MoviesController < ApplicationController
   def update
     movie = Movie.find params["id"]
     movie.update movie_params
+    movie.directors << Director.find(movie_params[:director_ids])
+  
     redirect_to movie_path(movie.id)
   end
 
@@ -35,6 +38,6 @@ class MoviesController < ApplicationController
 
   private
   def movie_params
-    params.require(:movie).permit(:title,:release_date,:description,:image,:tmdb_id)
+    params.require(:movie).permit(:title,:release_date,:description,:image,:tmdb_id,:director_ids)
   end
 end

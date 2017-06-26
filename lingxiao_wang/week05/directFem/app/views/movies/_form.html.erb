@@ -1,7 +1,13 @@
+
+
 <%= form_for @movie do |f| %>
 
+  <%= f.collection_check_boxes(:director_ids, Director.all, :id, :name) %>
+  <br>
 
 <!-- need a choice section to choose directors -->
+
+  <%= raise %>
 
   <%= f.label :title %>
   <%= f.text_field :title %>
