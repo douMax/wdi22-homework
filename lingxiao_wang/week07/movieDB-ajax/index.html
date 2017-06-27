@@ -9,18 +9,30 @@
 
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+
+
 </head>
 <body>
+
+  <div class="container">
+
   <h2>Fantasitc Movies and Where to Find Them</h2>
 
   <input type="text" id="keyword" placeholder="find a movie">
-  <input type="submit" id="search" value="Search">
+  <input type="submit" id="search" class="waves-effect waves-light btn" value="Search">
 
-  <button type="button" id="back-to-results">back</button>
+  <button type="button" id="back-to-results" class="waves-effect waves-light btn">back</button>
 
 
-  <div id="main"></div>
-  <div id="detail">
+  <div id="main" class="row"></div>
+  <div id="detail"></div>
   </div>
+
+
 </body>
 </html>

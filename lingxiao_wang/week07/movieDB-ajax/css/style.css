@@ -8,5 +8,10 @@
 
 
 body{
-  background-color: mediumaquamarine;
+  /*background-color: mediumaquamarine;*/
+}
+
+
+.result{
+  cursor: pointer;
 }

@@ -9,98 +9,180 @@ $(document).ready(function(){
   console.log('about to start');
 
 
-  var xhr = new XMLHttpRequest();  // get a new instance from object constructor XMLHttpRequest
 
-  // run the code when finished receiving response
-  xhr.onreadystatechange = function(){
+  var getSearchResults = function(keyword){
 
-    if (xhr.readyState !== 4) {
-      return;
-    }
+    var search = new XMLHttpRequest();  // get a new instance from object constructor XMLHttpRequest
 
-    console.log("Search Request Finished...");
+    search.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=24d863d54c86392e6e1df55b9a328755&query=" + keyword);
+    search.send();
 
-    searchResults = JSON.parse( xhr.responseText );
+    // run the code when finished receiving response
+    search.onreadystatechange = function(){
 
-    console.log(searchResults);
+      if (search.readyState !== 4) {
+        return;
+      }
 
-    for (var i = 0; i < searchResults.results.length; i++) {
-      var result = searchResults.results[i];
-      console.log(i, result.title, result.id);
+      console.log("Search Request Finished...");
 
-      // var $title = $('<a>').html(result.title).attr('href', 'https://www.themoviedb.org/movie/' + result.id);
-      //
-      // var $para = $('<p>').append($title);
+      searchResults = JSON.parse( search.responseText );
 
-      var $name = $('<div class="result">').html(result.title).attr("id", String(result.id));
+      console.log(searchResults);
 
-      $('#main').append($name);
+      for (var i = 0; i < searchResults.results.length; i++) {
+        var result = searchResults.results[i];
+        console.log(i, result.title, result.id, result.poster_path);
 
-    } // end of for loop
+        // materializa css
+
+        var $column = $('<div class="col s12 m6">');
+
+        var $card = $('<div class="card horizontal small">');
+        var $cardImage = $('<div class="card-image">');
+        var $cardStack = $('<div class="card-stacked">');
+        var $cardContent = $('<div class="card-content">');
+        var $cardAction = $('<div class="card-action">');
+
+        // following 3 can click
+        var $posterImage = $('<img class="result">').attr('src', 'http://image.tmdb.org/t/p/w300/' + result.poster_path).attr("movie-id", String(result.id));
+
+        var $movieTitle = $('<span class="cart-title result">').html("<h4>"+result.title+"</h4>").attr("movie-id", String(result.id));
+
+        var $cardLink = $('<a class="result">').html("More Info").attr("movie-id", String(result.id));
 
 
-  }// end of XMLHttpRequest
+        //
+        // var $name = $('<div class="result">').html(result.title).attr("id", String(result.id));
+
+        $cardImage.append($posterImage);
+        $cardContent.append($movieTitle);
+        $cardAction.append($cardLink);
+
+        $cardStack.append($cardContent).append($cardAction);
+        $card.append($cardImage).append($cardStack);
+        $column.append($card);
+
+        $('#main').append($column);
+
+        // $('#main').append($name);
+
+      } // end of for loop
 
 
-  detail = new XMLHttpRequest();
+    }// end of XMLHttpRequest
 
-  $(document).on("click", ".result", function(){
+  };
 
-    $('#main').hide();
-    $('#detail').show();
-    $('#back-to-results').show();
 
-    detail.open("GET", "https://api.themoviedb.org/3/movie/"+$(this).attr('id')+"?api_key=24d863d54c86392e6e1df55b9a328755")
+
+  //======================= get details  =====================
+
+
+  var getDetails = function(id) {
+
+    var detail = new XMLHttpRequest();
+
+    detail.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=24d863d54c86392e6e1df55b9a328755")
     detail.send();
 
-
-    console.log("One movie title clicked: " + $(this).text() + 'movie id: ' + $(this).attr('id'));
-
-  });
-
-  $('#back-to-results').click(function(){
-    $('#main').show();
-    $('#detail').hide().empty();
-  });
-
-
-  detail.onreadystatechange = function(){
-    if( detail.readyState !== 4 ){
-      return;
-    }
+    detail.onreadystatechange = function(){
+      if( detail.readyState !== 4 ){
+        return;
+      }
 
     console.log("Detail Request Finished...");
 
     detailResult = JSON.parse( detail.responseText );
     console.log(detailResult);
 
-    $title = $('<h3>').html(detailResult.title);
-    $poster = $('<img class="poster">').attr('src', 'http://image.tmdb.org/t/p/w300' + detailResult.poster_path);
+    var $title = $('<h3>').html(detailResult.title);
+    var $poster = $('<img class="poster">').attr('src', 'http://image.tmdb.org/t/p/w300' + detailResult.poster_path);
 
 
-    $overview = $('<p>').html("Overview: " + detailResult.overview);
+    var $overview = $('<p>').html("Overview: " + detailResult.overview);
     // $background = $ detailResult.backdrop_path;
 
-    $runtime = $('<p>').html("Runtime: " + detailResult.runtime);
-    $releaseDate = $('<p>').html("Release Date: " + detailResult.release_date);
+    var $runtime = $('<p>').html("Runtime: " + detailResult.runtime + " mins");
+    var $releaseDate = $('<p>').html("Release Date: " + detailResult.release_date);
 
-    $rating = $('<p>').html("TMDB Rating: " + detailResult.vote_average);
+    // get genres
+    var movieGenres = [];
+    for (var i = 0; i < detailResult.genres.length; i++) {
+      var genre = detailResult.genres[i].name;
+      movieGenres.push(genre);
+    }
+    var $genres = $('<p>').html("Genres: " + movieGenres.join(', '));
+
+    var $rating = $('<p>').html("TMDB Rating: " + detailResult.vote_average);
+
+    // debugger;
+    var directorsOfMovie = getCredits(id);
+
+    console.log(directorsOfMovie);
+
+    var $directors = $('<p>').html("Directed by: " + directorsOfMovie);
+
+
 
     $('#detail').append($title)
                 .append($poster)
                 .append($overview)
                 .append($runtime)
                 .append($releaseDate)
-                .append($rating);
+                .append($rating)
+                .append($genres);
 
 
-  } // end of onreadystatechange
+    } // end of onreadystatechange
+
+  };
 
 
 
 
+  var getCredits = function(id) {
+
+    var credits = new XMLHttpRequest;
+    //
+    credits.open("GET", "https://api.themoviedb.org/3/movie/" + id + "/credits?api_key=24d863d54c86392e6e1df55b9a328755");
+    credits.send();
+
+    var creditResults;
+    var directors = [];
+
+    credits.onreadystatechange = function(){
+      if (credits.readyState !== 4) {
+        return;
+      }
+
+      console.log("Credits Request Finished...");
+
+      creditResults = JSON.parse(credits.responseText);
+
+      console.log(creditResults);
+
+      for (var i = 0; i < creditResults.crew.length; i++) {
+        var crew = creditResults.crew[i];
+        if (crew.job === "Director") {
+          // console.log(crew);
+          directors.push(crew.name);
+        }
+      }
+
+      directors = directors.join(', ');
+      var $directorsOfMovie = $('<p>').html("Directed by: " + directors);
+      $('#detail').append($directorsOfMovie);
+
+    } // end of onreadystatechange
 
 
+  };
+
+
+
+
+  // ========= get the input ============
   $keyword = $('#keyword').val();
   $('#keyword').change(function(){
     if ( $keyword !== $(this).val() ) {
@@ -111,38 +193,61 @@ $(document).ready(function(){
   });
 
 
-  // open a request and send the request
+  // open a search request and send the request
   $('#search').click(function(){
 
     $('#main').empty().show();
     $('#detail').empty().hide();
     $('#back-to-results').hide();
 
-    xhr.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=24d863d54c86392e6e1df55b9a328755&query=" + $keyword);
+    getSearchResults($keyword);
 
-    xhr.send();
+  });
+
+  // click each movie to get the details
+  $(document).on("click", ".result", function(){
+
+    $('#main').hide();
+    $('#detail').show();
+    $('#back-to-results').show();
+
+    var movieID = $(this).attr('movie-id');
+
+    getDetails(movieID);
+
+    console.log("One movie title clicked: " + $(this).text() + 'movie id: ' + movieID);
 
   });
 
 
+  // click back go back to search results
+  $('#back-to-results').click(function(){
+    $('#main').show();
+    $('#detail').hide().empty();
+    $(this).hide();
+  });
 
-  //========== get genres (when the page load) ============
 
-  genre = new XMLHttpRequest();
-  genre.onreadystatechange = function(){
-    if(genre.readyState !== 4) {
-      return;
+  //========== get genre list (no use actually) ============
+
+
+  var getGenreList = function(){
+    genre = new XMLHttpRequest();
+    genre.onreadystatechange = function(){
+      if(genre.readyState !== 4) {
+        return;
+      }
+      console.log("Genre Request Finished...");
+
+      genreList = JSON.parse( genre.responseText );
+
+      console.log(genreList);
+
     }
-    console.log("Genre Request Finished...");
 
-    genreList = JSON.parse( genre.responseText );
-
-    console.log(genreList);
-
-  }
-
-  genre.open("GET", "https://api.themoviedb.org/3/genre/movie/list?api_key=24d863d54c86392e6e1df55b9a328755&language=en-US");
-  genre.send();
+    genre.open("GET", "https://api.themoviedb.org/3/genre/movie/list?api_key=24d863d54c86392e6e1df55b9a328755&language=en-US");
+    genre.send();
+  };
 
 
 
