@@ -1,0 +1,12 @@
+body{
+  background-color: mediumaquamarine;
+  color: rgb(54, 56, 52);
+  font-family: "avenir", sans-serif;
+}
+
+
+#map {
+  width: 100%;
+  height: 400px;
+  background-color: grey;
+}
